@@ -1,2 +1,2 @@
 # minesweeper
- A minesweeper game
+ A minesweeper game created in my first semester of college
