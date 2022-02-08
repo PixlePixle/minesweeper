@@ -181,7 +181,7 @@ public class oldCode {
 						{
 							x = 0;
 							y = 0;
-							while (y < height)
+							while (y < height) //Recursion
 							{
 								if (x < width)
 								{
