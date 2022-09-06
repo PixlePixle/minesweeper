@@ -4,9 +4,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Board extends VBox {
-    private int rows;
-    private int columns;
-    private Cell[][] board;
+    public int rows;
+    public int columns;
+    public Cell[][] board;
 
     /**
      * Initializes a board 
@@ -32,14 +32,16 @@ public class Board extends VBox {
             HBox row = new HBox();
             for (int j = 0; j < columns; j++) {
                 board[i][j] = new Cell(i, j);
+                board[i][j].setBoard(this);
                 row.getChildren().add(board[i][j]);
             }
             this.getChildren().add(row);
         }
+        //Move setting the click logic to here so that it's possible to check lose/Set recursive formula BUT HOW
 
         //MAKE SURE TO CREATE A VARIABLE LATER SO THE NUMBER OF MINES CAN BE CHANGED
         //Seeds the bombs and numbers surrounding cells
-        for (int i = 0; i < 5;) {
+        for (int i = 0; i < 2;) {
             int x = (int) (Math.random() * rows);
             int y = (int) (Math.random() * columns);
             if(!board[x][y].isMine()) {
@@ -76,7 +78,9 @@ public class Board extends VBox {
     // As well as create a (possibly recursive) implementation for clearing the large patches of empty squares
     // As well as a reset method
     
-
+    public void revealEmpty() {
+        
+    }
 
     public Board getBoard() {
         return this;

@@ -7,6 +7,8 @@ public class TopBar extends MenuBar{
     ClickableMenu about;
     public TopBar() {
         super();
+        this.setMinHeight(25);
+        this.setMaxHeight(25);
         populate();
     }
 

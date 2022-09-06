@@ -1,7 +1,9 @@
 package src;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -14,22 +16,28 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    private int width = 680;
-    private int height = 680;
+    private int width;
+    private int height;
     private Board board;
     private TopBar topBar;
 
     @Override
     public void start(Stage stage) throws IOException {
         VBox window = new VBox();
+        HBox align = new HBox();
+        align.setAlignment(Pos.CENTER);
         stage.setTitle("Minesweeper");
 
         topBar = new TopBar();
-        board = new Board(5, 5);
+        board = new Board(10, 10);
+        height = board.rows * 30 + 10 + 25; //Right now there's the issue where going a larger grid starts to cut off sides/bottom
+        width = board.columns * 30 + 10;
         stage.sizeToScene();
-        window.getChildren().addAll(topBar, board);
-        scene = new Scene(window, height , width);
+        align.getChildren().addAll(board);
+        window.getChildren().addAll(topBar, align);
+        scene = new Scene(window, width , height);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

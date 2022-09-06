@@ -1,5 +1,6 @@
 package src;
 
+import src.Board;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 
@@ -9,7 +10,7 @@ public class Cell extends Button{
     private int surroundingMines;
     private boolean mine;
     private boolean flag;
-    private static boolean lose = false;
+    private static Board board;
 
     // Create a way of detecting if the button is right clicked and have it add an icon of a flag
     // Flagging a mine should also make it either unclickable or make it so that clicking the button has no effect DONE
@@ -47,12 +48,38 @@ public class Cell extends Button{
         if(isMine()) {
             setDisable(true);
             setText("💣");
-            lose = true;
         } else if (isFlagged()) {
             setText("🚩");
         } else {
-            setText(Integer.toString(surroundingMines));
+            setDisable(true);
+            if(surroundingMines > 0) {
+                setText(Integer.toString(surroundingMines));
+            } else {
+                setText(" ");
+                recurse();
+            }
+
         }
+    }
+
+    private void recurse() {
+        if(positionRow-1 >= 0 && !board.board[positionRow-1][positionColumn].isDisabled()) {
+            board.board[positionRow-1][positionColumn].action();
+        }
+        if(positionRow+1 < board.rows && !board.board[positionRow+1][positionColumn].isDisabled()) {
+            board.board[positionRow+1][positionColumn].action();
+        }
+        if(positionColumn-1 >= 0 && !board.board[positionRow][positionColumn-1].isDisabled()) {
+            board.board[positionRow][positionColumn-1].action();
+        }
+        if(positionColumn+1 < board.columns && !board.board[positionRow][positionColumn+1].isDisabled()) {
+            board.board[positionRow][positionColumn+1].action();
+        }
+        
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     /**
