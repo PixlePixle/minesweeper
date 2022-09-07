@@ -41,7 +41,7 @@ public class Board extends VBox {
 
         //MAKE SURE TO CREATE A VARIABLE LATER SO THE NUMBER OF MINES CAN BE CHANGED
         //Seeds the bombs and numbers surrounding cells
-        for (int i = 0; i < 13;) {
+        for (int i = 0; i < 15;) {
             int x = (int) (Math.random() * rows);
             int y = (int) (Math.random() * columns);
             if(!board[x][y].isMine()) {

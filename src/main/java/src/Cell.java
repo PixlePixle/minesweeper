@@ -8,6 +8,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class Cell extends Button{
+    private int counter = 0;
     private int positionRow;
     private int positionColumn;
     private int surroundingMines;
@@ -63,6 +64,7 @@ public class Cell extends Button{
 
     public void action() {
         if(isFlagged()) {
+            System.out.println("Flag clicked");
         } else if (isMine()) {
             setDisable(true);
             setText("💣");
@@ -73,7 +75,6 @@ public class Cell extends Button{
             } else {
                 setText(" ");
                 recurse();
-                recursed = false;
             }
 
         }
@@ -101,8 +102,6 @@ public class Cell extends Button{
             if(positionRow-1 >= 0 && !board.board[positionRow-1][positionColumn+1].recursed)
                 board.board[positionRow-1][positionColumn+1].action();
         }
-        
-        
     }
 
     public void setBoard(Board board) {
