@@ -62,11 +62,10 @@ public class Cell extends Button{
     }
 
     public void action() {
-        if(isMine()) {
+        if(isFlagged()) {
+        } else if (isMine()) {
             setDisable(true);
             setText("💣");
-        } else if (isFlagged()) {
-            setText("🚩");
         } else {
             setDisable(true);
             if(surroundingMines > 0) {
