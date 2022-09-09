@@ -1,12 +1,19 @@
 package src;
 
+import java.util.Optional;
+
+import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Board extends VBox {
-    public int rows;
-    public int columns;
-    public Cell[][] board;
+    public static int rows;
+    public static int columns;
+    public static Cell[][] board;
 
     /**
      * Initializes a board 
@@ -37,7 +44,8 @@ public class Board extends VBox {
             }
             this.getChildren().add(row);
         }
-        //Move setting the click logic to here so that it's possible to check lose/Set recursive formula BUT HOW
+        // Create a multithreaded thread so that when cleared == rows * cols - mines it's a win
+        // Don't really care too much about flags cause you know how much there are
 
         //MAKE SURE TO CREATE A VARIABLE LATER SO THE NUMBER OF MINES CAN BE CHANGED
         //Seeds the bombs and numbers surrounding cells
@@ -69,6 +77,8 @@ public class Board extends VBox {
                 System.out.println("Mine " + i + " seeded at: " + x + "," + y);
             }
         }
+        board[0][0].cleared = 0;
+        loop();
     }
 
     // TODO: Shift the numbering from the populate Board method to one that works on click.
@@ -78,8 +88,8 @@ public class Board extends VBox {
     // As well as create a (possibly recursive) implementation for clearing the large patches of empty squares
     // As well as a reset method
     
-    public void revealEmpty() {
-        
+    protected void endGame() {
+        System.out.println("Boom!");
     }
 
     public Board getBoard() {
@@ -95,6 +105,35 @@ public class Board extends VBox {
         return this.columns;
     }
 
+    public void  loop() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("You win!");
+        ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+        ButtonType replay = new ButtonType("Replay", ButtonData.YES);
+        dialog.setContentText("Congratulations! You've cleared the minefield.");
+        dialog.getDialogPane().getButtonTypes().addAll(type, replay);
+        Thread thread = new Thread(() -> {
+        
 
+            while(true) {
+                if(board[0][0].cleared == (rows * columns) - 5) {
+                    System.out.println("Congrats");
+                    Platform.runLater(() -> {
+                        Optional<ButtonType> result = dialog.showAndWait();
+                        if (result.isPresent() && result.get().getText().equals("Replay")) {
+                            this.getChildren().clear();
+                            populateBoard();
+                        }
+                    });
+                    break;
+                } else {
+                    System.out.print("");
+                }
+                
+            }
+        });
+        thread.setDaemon(false);
+        thread.start();
+    }
 
 }

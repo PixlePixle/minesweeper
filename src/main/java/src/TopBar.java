@@ -3,8 +3,8 @@ package src;
 import javafx.scene.control.MenuBar;
 
 public class TopBar extends MenuBar{
+    ClickableMenu options;
     ClickableMenu help;
-    ClickableMenu about;
     public TopBar() {
         super();
         this.setMinHeight(25);
@@ -13,24 +13,24 @@ public class TopBar extends MenuBar{
     }
 
     private void populate() {
-        help = new ClickableMenu("Help");
-        help.setOnAction(e -> {
-            runNow(() -> System.out.println("Help Pressed"));
+        options = new ClickableMenu("Options");
+        options.setOnAction(e -> {
+            runNow(() -> System.out.println("Options Pressed"));
         });
 
 
 
 
-        about = new ClickableMenu("About");
-        about.setOnAction(e -> {
+        help = new ClickableMenu("Help");
+        help.setOnAction(e -> {
             runNow(() -> {
-                System.out.println("About Pressed");
+                System.out.println("Help Pressed");
             });
         });
 
 
 
-        this.getMenus().addAll(help, about);
+        this.getMenus().addAll(options, help);
     }
 
     /**

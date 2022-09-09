@@ -8,7 +8,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class Cell extends Button{
-    private static int cleared = 0;
+    static int cleared = 0;
     private int positionRow;
     private int positionColumn;
     private int surroundingMines;
@@ -69,9 +69,11 @@ public class Cell extends Button{
         if(isFlagged()) {
             System.out.println("Flag clicked");
             System.out.println(cleared);
+            board.loop();
         } else if (isMine()) {
             setDisable(true);
             setText("💣");
+            board.endGame();
         } else {
             setDisable(true);
             if(surroundingMines > 0) {
