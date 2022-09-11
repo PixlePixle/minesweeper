@@ -17,11 +17,6 @@ public class Cell extends Button{
     public boolean recursed = false;
     private static Board board;
 
-    // Create a way of detecting if the button is right clicked and have it add an icon of a flag
-    // Flagging a mine should also make it either unclickable or make it so that clicking the button has no effect DONE
-    // Right clicking again will clear the flag and regive functionality
-    // Maybe a boolean logic switch? IMPLEMENTED
-
     /**
      * Prevent creation of cell without information
      */
@@ -85,6 +80,9 @@ public class Cell extends Button{
         }
     }
 
+    /**
+     * Recursive function for clearing squares
+     */
     private void recurse() {
         recursed = true;
         if(positionRow-1 >= 0 && !board.board[positionRow-1][positionColumn].recursed) {

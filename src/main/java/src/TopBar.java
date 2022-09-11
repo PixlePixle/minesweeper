@@ -33,6 +33,7 @@ public class TopBar extends MenuBar{
         this.getMenus().addAll(options, help);
     }
 
+    // Do i need this?
     /**
      * Multithreading
      * @param target
