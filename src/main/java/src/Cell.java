@@ -40,12 +40,13 @@ public class Cell extends Button{
         setMaxSize(30, 30);
         this.setFocusTraversable(false);
         this.setOnAction(e -> {
-            action();
+            if(!board.gameOver)
+                action();
         });
         this.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.SECONDARY) {
+                if (event.getButton() == MouseButton.SECONDARY && !board.gameOver) {
                     flag = !flag;
                     if (flag) {
                         setText("🚩");
@@ -64,7 +65,6 @@ public class Cell extends Button{
         if(isFlagged()) {
             System.out.println("Flag clicked");
             System.out.println(cleared);
-            board.loop();
         } else if (isMine()) {
             setDisable(true);
             setText("💣");

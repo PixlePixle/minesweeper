@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 public class Board extends VBox {
     public static int rows;
     public static int columns;
+    boolean gameOver = false;
     public static Cell[][] board;
 
     /**
@@ -90,6 +91,7 @@ public class Board extends VBox {
     
     protected void endGame() {
         System.out.println("Boom!");
+        gameOver = true;
     }
 
     public Board getBoard() {
@@ -110,20 +112,27 @@ public class Board extends VBox {
         dialog.setTitle("You win!");
         ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
         ButtonType replay = new ButtonType("Replay", ButtonData.YES);
-        dialog.setContentText("Congratulations! You've cleared the minefield.");
         dialog.getDialogPane().getButtonTypes().addAll(type, replay);
         Thread thread = new Thread(() -> {
         
 
             while(true) {
-                if(board[0][0].cleared == (rows * columns) - 5) {
-                    System.out.println("Congrats");
+                if(board[0][0].cleared == (rows * columns) - 5 || gameOver) {
+                    System.out.println("Game over");
+                    if(board[0][0].cleared != (rows * columns))
+                        dialog.setContentText("You hit a mine. Game over.");
+                    else
+                        dialog.setContentText("Congratulations! You've cleared the minefield.");
+                    gameOver = true;
                     Platform.runLater(() -> {
                         Optional<ButtonType> result = dialog.showAndWait();
                         if (result.isPresent() && result.get().getText().equals("Replay")) {
                             this.getChildren().clear();
+                            gameOver = false;
                             populateBoard();
+                            
                         }
+                        
                     });
                     break;
                 } else {
