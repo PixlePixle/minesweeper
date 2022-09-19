@@ -34,7 +34,7 @@ public class Board extends VBox {
      * Populates the board array as well seeding
      * and generating the display section.
      */
-    private void populateBoard() {
+    void populateBoard() {
         // Populates with Cells
         for (int i = 0; i < rows; i++) {
             HBox row = new HBox();
@@ -109,7 +109,7 @@ public class Board extends VBox {
 
     public void  loop() {
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("You win!");
+        dialog.setTitle("Game Over");
         ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
         ButtonType replay = new ButtonType("Replay", ButtonData.YES);
         dialog.getDialogPane().getButtonTypes().addAll(type, replay);
@@ -130,7 +130,6 @@ public class Board extends VBox {
                             this.getChildren().clear();
                             gameOver = false;
                             populateBoard();
-                            
                         }
                         
                     });
@@ -141,7 +140,7 @@ public class Board extends VBox {
                 
             }
         });
-        thread.setDaemon(false);
+        thread.setDaemon(true);
         thread.start();
     }
 

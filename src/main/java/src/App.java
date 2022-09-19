@@ -28,8 +28,9 @@ public class App extends Application {
         align.setAlignment(Pos.CENTER);
         stage.setTitle("Minesweeper");
 
-        topBar = new TopBar();
+        
         board = new Board(10, 10);
+        topBar = new TopBar(board);
         height = board.rows * 30 + 10 + 25; //Right now there's the issue where going a larger grid starts to cut off sides/bottom
         width = board.columns * 30 + 10;
         stage.sizeToScene();
