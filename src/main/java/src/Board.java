@@ -34,6 +34,13 @@ public class Board extends VBox {
         System.out.println("Board created and populated!");
     }
 
+    void updateBoard(int rows, int columns, int numMines) {
+        this.rows = rows;
+        this.columns = columns;
+        this.numMines = numMines;
+        board = new Cell[rows][columns];
+    }
+
     /**
      * Populates the board array as well seeding
      * and generating the display section.
