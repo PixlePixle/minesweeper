@@ -17,6 +17,7 @@ public class TopBar extends MenuBar{
     ClickableMenu about;
     ClickableMenu restart;
     Board board;
+    int selection = 1;
     public TopBar(Board board) {
         super();
         this.setMinHeight(25);
@@ -42,6 +43,24 @@ public class TopBar extends MenuBar{
             hard.setTooltip(new Tooltip("had"));
             ToggleGroup difficulty = new ToggleGroup();
             difficulty.getToggles().addAll(easy, medium, hard);
+            switch (selection) {
+                case 1:
+                    easy.setSelected(true);
+                    easy.requestFocus();
+                    break;
+                case 2:
+                    medium.setSelected(true);
+                    medium.requestFocus();
+                    break;
+                case 3:
+                    hard.setSelected(true);
+                    hard.requestFocus();
+                    break;
+        
+                default:
+                    System.out.println("How'd we get here?");
+                    break;
+            }
             VBox radioButtons = new VBox();
             radioButtons.getChildren().addAll(easy, medium, hard);
             dialog.getDialogPane().getChildren().addAll(radioButtons);
@@ -53,14 +72,17 @@ public class TopBar extends MenuBar{
                 if(easy.isSelected()) {
                     board.updateBoard(8, 8, 10);
                     App.resize(8, 8);
+                    selection = 1;
                 }
                 if (medium.isSelected()) {
                     board.updateBoard(10, 10, 20);
                     App.resize(10, 10);
+                    selection = 2;
                 }
                 if (hard.isSelected()) {
                     board.updateBoard(15, 15, 99);
                     App.resize(15, 15);
+                    selection = 3;
                 }
                 board.restart();
             }
