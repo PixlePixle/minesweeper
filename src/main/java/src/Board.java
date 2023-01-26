@@ -16,15 +16,18 @@ public class Board extends VBox {
     boolean gameOver = false;
     public static Cell[][] board;
 
+    public int numMines;
+
     /**
      * Initializes a board 
      * @param rows
      * @param columns
      */
-    public Board(int rows, int columns) {
+    public Board(int rows, int columns, int numMines) {
         super();
         this.rows = rows;
         this.columns = columns;
+        this.numMines = numMines;
         board = new Cell[rows][columns];
         populateBoard();
         System.out.println("Board created and populated!");
@@ -45,12 +48,9 @@ public class Board extends VBox {
             }
             this.getChildren().add(row);
         }
-        // Create a multithreaded thread so that when cleared == rows * cols - mines it's a win
-        // Don't really care too much about flags cause you know how much there are
 
-        //MAKE SURE TO CREATE A VARIABLE LATER SO THE NUMBER OF MINES CAN BE CHANGED
         //Seeds the bombs and numbers surrounding cells
-        for (int i = 0; i < 5;) {
+        for (int i = 0; i < numMines;) {
             int x = (int) (Math.random() * rows);
             int y = (int) (Math.random() * columns);
             if(!board[x][y].isMine()) {
@@ -85,9 +85,7 @@ public class Board extends VBox {
     // TODO: Shift the numbering from the populate Board method to one that works on click.
     // Maybe move to the Cell class, check surrounding cells for number of miens and then reveal
     // That way we can make it so if the first click has a bomb, it simply moves it elsewhere
-
-    // As well as create a (possibly recursive) implementation for clearing the large patches of empty squares
-    // As well as a reset method
+    // Maybe just let the 1st click be mine be a feature
     
     protected void endGame() {
         System.out.println("Boom!");
@@ -117,9 +115,9 @@ public class Board extends VBox {
         
 
             while(true) {
-                if(board[0][0].cleared == (rows * columns) - 5 || gameOver) {
+                if(board[0][0].cleared == (rows * columns) - numMines || gameOver) {
                     System.out.println("Game over");
-                    if(board[0][0].cleared != (rows * columns))
+                    if(board[0][0].cleared != (rows * columns) - numMines)
                         dialog.setContentText("You hit a mine. Game over.");
                     else
                         dialog.setContentText("Congratulations! You've cleared the minefield.");
