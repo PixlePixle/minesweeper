@@ -15,6 +15,7 @@ public class Board extends VBox {
     public static int columns;
     boolean gameOver = false;
     public static Cell[][] board;
+    boolean restart = false;
 
     public int numMines;
 
@@ -105,6 +106,16 @@ public class Board extends VBox {
         return this.columns;
     }
 
+    public void restart() {
+        restart = true;
+        if(gameOver) { // If gameover is true, it means that the loop has stopped
+            this.getChildren().clear();
+            restart = false;
+            populateBoard();
+            gameOver = false;
+        }
+    }
+
     public void  loop() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Game Over");
@@ -112,9 +123,16 @@ public class Board extends VBox {
         ButtonType replay = new ButtonType("Replay", ButtonData.YES);
         dialog.getDialogPane().getButtonTypes().addAll(type, replay);
         Thread thread = new Thread(() -> {
-        
-
             while(true) {
+                if(restart) {
+                    Platform.runLater(() -> {
+                        this.getChildren().clear();
+                        restart = false;
+                        populateBoard();
+                        System.out.println("Thread stopping");
+                    });
+                    break;
+                }
                 if(board[0][0].cleared == (rows * columns) - numMines || gameOver) {
                     System.out.println("Game over");
                     if(board[0][0].cleared != (rows * columns) - numMines)
@@ -125,17 +143,13 @@ public class Board extends VBox {
                     Platform.runLater(() -> {
                         Optional<ButtonType> result = dialog.showAndWait();
                         if (result.isPresent() && result.get().getText().equals("Replay")) {
-                            this.getChildren().clear();
-                            gameOver = false;
-                            populateBoard();
+                            restart();
                         }
-                        
                     });
                     break;
                 } else {
                     System.out.print("");
                 }
-                
             }
         });
         thread.setDaemon(true);

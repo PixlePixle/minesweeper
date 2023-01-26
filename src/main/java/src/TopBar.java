@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 public class TopBar extends MenuBar{
     ClickableMenu options;
     ClickableMenu help;
+    ClickableMenu restart;
     Board board;
     public TopBar(Board board) {
         super();
@@ -30,15 +31,16 @@ public class TopBar extends MenuBar{
             dialog.getDialogPane().getButtonTypes().addAll(type, replay);
             Optional<ButtonType> result = dialog.showAndWait();
             if (result.isPresent() && result.get().getText().equals("Replay")) {
-                board.gameOver = true;
-                board.getChildren().clear();
-                board.gameOver = false;
-                board.populateBoard();
+                board.restart();
             }
                 
         });
 
 
+        restart = new ClickableMenu("Restart");
+        restart.setOnAction(e -> {
+            board.restart();
+        });
 
 
         help = new ClickableMenu("Help");
@@ -50,7 +52,7 @@ public class TopBar extends MenuBar{
 
 
 
-        this.getMenus().addAll(options, help);
+        this.getMenus().addAll(restart, options, help);
     }
 
     // Do i need this?
