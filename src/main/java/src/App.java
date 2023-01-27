@@ -26,7 +26,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         VBox window = new VBox();
         HBox align = new HBox();
-        this.stage = stage;
+        App.stage = stage;
         align.setAlignment(Pos.CENTER);
         stage.setTitle("Minesweeper");
 

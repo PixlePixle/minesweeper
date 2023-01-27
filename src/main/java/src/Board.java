@@ -3,7 +3,6 @@ package src;
 import java.util.Optional;
 
 import javafx.application.Platform;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -86,7 +85,7 @@ public class Board extends VBox {
                 System.out.println("Mine " + i + " seeded at: " + x + "," + y);
             }
         }
-        board[0][0].cleared = 0;
+        Cell.cleared = 0;
         loop();
     }
 

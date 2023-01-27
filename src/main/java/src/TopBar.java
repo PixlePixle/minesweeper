@@ -2,7 +2,6 @@ package src;
 
 import java.util.Optional;
 
-import javafx.application.Platform;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.MenuBar;
@@ -33,14 +32,15 @@ public class TopBar extends MenuBar{
             dialog.setTitle("Options");
             ButtonType type = new ButtonType("Cancel", ButtonData.OK_DONE);
             ButtonType replay = new ButtonType("Done", ButtonData.YES);
+            
 
             // Adding Difficulties
             RadioButton easy = new RadioButton("Beginner");
-            easy.setTooltip(new Tooltip("8x8 with 10 mines"));
+            easy.setTooltip(new Tooltip("9x9 with 10 mines"));
             RadioButton medium = new RadioButton("Medium");
-            medium.setTooltip(new Tooltip("Medum"));
+            medium.setTooltip(new Tooltip("16x16 with 40 mines"));
             RadioButton hard = new RadioButton("Expert");
-            hard.setTooltip(new Tooltip("had"));
+            hard.setTooltip(new Tooltip("30x16 with 99 mines"));
             ToggleGroup difficulty = new ToggleGroup();
             difficulty.getToggles().addAll(easy, medium, hard);
             switch (selection) {
@@ -64,24 +64,29 @@ public class TopBar extends MenuBar{
             VBox radioButtons = new VBox();
             radioButtons.getChildren().addAll(easy, medium, hard);
             dialog.getDialogPane().getChildren().addAll(radioButtons);
-
+            easy.setMinSize(RadioButton.USE_PREF_SIZE, RadioButton.USE_PREF_SIZE);
+            medium.setMinSize(RadioButton.USE_PREF_SIZE, RadioButton.USE_PREF_SIZE);
+            hard.setMinSize(RadioButton.USE_PREF_SIZE, RadioButton.USE_PREF_SIZE);
+            
+            dialog.getDialogPane().setMinSize(200, 120);
+            dialog.getDialogPane().setMaxSize(200, 120);
 
             dialog.getDialogPane().getButtonTypes().addAll(type, replay);
             Optional<ButtonType> result = dialog.showAndWait();
             if (result.isPresent() && result.get().getText().equals("Done")) {
                 if(easy.isSelected()) {
-                    board.updateBoard(8, 8, 10);
-                    App.resize(8, 8);
+                    board.updateBoard(9, 9, 10);
+                    App.resize(9, 9);
                     selection = 1;
                 }
                 if (medium.isSelected()) {
-                    board.updateBoard(10, 10, 20);
-                    App.resize(10, 10);
+                    board.updateBoard(16, 16, 40);
+                    App.resize(16, 16);
                     selection = 2;
                 }
                 if (hard.isSelected()) {
-                    board.updateBoard(15, 15, 99);
-                    App.resize(15, 15);
+                    board.updateBoard(16, 30, 99);
+                    App.resize(16, 30);
                     selection = 3;
                 }
                 board.restart();
@@ -105,22 +110,11 @@ public class TopBar extends MenuBar{
             ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
             dialog.setContentText(aboutText);
             dialog.getDialogPane().getButtonTypes().addAll(type);
-            Optional<ButtonType> result = dialog.showAndWait();
+            dialog.showAndWait();
         });
 
 
 
         this.getMenus().addAll(restart, options, about);
-    }
-
-    // Do i need this?
-    /**
-     * Multithreading
-     * @param target
-     */
-    public static void runNow(Runnable target) {
-        Thread thread = new Thread(target);
-        thread.setDaemon(true);
-        thread.start();
     }
 }
