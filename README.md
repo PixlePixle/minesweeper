@@ -25,7 +25,7 @@ I was successful in achieving what I had set out to do and am happy to call this
 
 
 ##### Difficulties
-> Beginner | 9x9 with 10 mines
+ Beginner | 9x9 with 10 mines
  ![Picture of beginner board](images/easy%20mode.png)
 
 > Advanced | 16x16 with 40 mines
