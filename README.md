@@ -1,6 +1,7 @@
 # minesweeper
 ----
 > ![In-progress Minesweeper Board](Images/in%20progress.png)
+> 
 > Created with Java and JavaFX
 
 
