@@ -37,7 +37,7 @@ public class TopBar extends MenuBar{
             // Adding Difficulties
             RadioButton easy = new RadioButton("Beginner");
             easy.setTooltip(new Tooltip("9x9 with 10 mines"));
-            RadioButton medium = new RadioButton("Medium");
+            RadioButton medium = new RadioButton("Advanced");
             medium.setTooltip(new Tooltip("16x16 with 40 mines"));
             RadioButton hard = new RadioButton("Expert");
             hard.setTooltip(new Tooltip("30x16 with 99 mines"));
