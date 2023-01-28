@@ -19,18 +19,23 @@ I was successful in achieving what I had set out to do and am happy to call this
 ### Images
 ##### End Screens
 > Winning
+> 
 > ![Win Screen](Images/Finish.png)
 
 > Losing
+> 
 > ![Lose Screen](Images/mine.png)
 
 
 ##### Difficulties
 > Beginner | 9x9 with 10 mines
+> 
 > ![Picture of beginner board](Images/easy%20mode.png)
 
 > Advanced | 16x16 with 40 mines
+> 
 > ![Picture of advanced board](Images/medium%20mode.png)
 
 > Expert | 30x16 with 99 mines
+> 
 > ![Picture of expert board](Images/expert%20mode.png)
